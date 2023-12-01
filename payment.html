@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Selection</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        text-align: center;
+        color: #fff;
+
+      }
+      .payment-container {
+        background-color: #fff;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 2px solid #eef0f1;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .back {
+        float: left;
+        margin-top: 1cm;
+        margin-left: 1cm;
+      }
+      .logout{
+        float: right;
+        margin-top: 1cm;
+        margin-right: 1cm;
+      }
+      input[type="text"],
+      [type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      button {
+        background-color: #0f5e6c;
+        color: #eddfdf;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+      button:hover {
+        background-color: #1b6ec6;
+      }
+      .payment-options {
+        display: flex;
+        flex-direction: column;
+      }
+      .card-payment-form,
+      .paytm-payment-form {
+        margin-top: 1cm;
+        width: 70%;
+        display: none; /* Initially hidden */
+      }
+      .confirmation-container {
+        display: none;
+        text-align: center;
+      }
+      .success-container {
+        display: none;
+        text-align: center;
+      }
+      header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li:last-child {
+    margin-right: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #434242;
+    font-weight: bold;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+header {
+            background-color: #060606;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        nav {
+            text-align: center;
+            background-color: #0ea5a8;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #f8f4f4;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            background-color: #fbf9f9;
+        }
+        body {
+            background-image: url('https://images.theconversation.com/files/45159/original/rptgtpxd-1396254731.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=754&fit=clip'); 
+            background-size: auto;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Fix the background in place */
+            background-position: center center; /* Center the background image */
+            background-size: 1700px;
+            
+            }
+      
+    </style>
+  </head>
+  
+  <button
+    type="submit"
+    class="logout"
+    onclick="window.location.href='home.html'"
+  >
+    Logout
+  </button>
+  <body>
+    <div class="container">
+        <header>
+            <div>
+                <a href="home.html">
+                    <img src="rentnreadlogo.png" style="height: 80px;" width="200px" alt="Dr. Kalam Photo 1">
+                </a>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="book.html">Books</a></li>
+                        <li><a href="lease.html">Lease</a></li>
+                        <li><a href="rent.html">Rent</a></li>
+                        <li><a href="contact1.html">Contact</a></li>
+                        <li><a href="genres.html">Genres</a></li>
+                        <li><a href="payment.html">payment</a></li>
+                    </ul>
+                    </nav>
+            </header>
+        </div>
+    <h1>Select a Payment Method</h1>
+    <div class="payment-container">
+      <form>
+        <div class="payment-options">
+          <button type="button" id="cardPaymentButton">Pay with Card</button>
+          
+        </div>
+
+        <div class="card-payment-form">
+          <label for="card_number">Card Number:</label>
+          <input type="text" id="card_number" required />
+          <label for="expiration_date">Expiration Date:</label>
+          <input type="text" id="expiration_date" required />
+          <label for="cvv">CVV:</label>
+          <input type="password" id="cvv" required />
+          <button type="button" id="processCardPayment">Make Card Payment</button>
+      </div>
+
+      
+        
+      </form>
+    </div>
+
+    <!-- Payment Confirmation Page -->
+    <div class="confirmation-container" id="confirmation-container">
+      
+      <div class="payment-details">
+        <p style="border: 2px solid rgb(13, 23, 13); border-radius: 5px; padding: 10px; background-color: #fff; color: rgb(9, 241, 9);">
+            <strong>Booking successful!</strong>
+         
+        </p>
+        
+    </div>
+
+    <!-- Payment Success Page -->
+    <div class="success-container" id="success-container">
+      <h2>Payment Successful</h2>
+      <p>Your payment has been successfully processed.</p>
+      <p>Your cab has been booked. Enjoy your ride!</p>
+    </div>
+
+    <script>
+      const cardPaymentButton = document.getElementById("cardPaymentButton");
+        const paytmPaymentButton = document.getElementById("payWithPaytmButton");
+        const cardPaymentForm = document.querySelector(".card-payment-form");
+        const paytmPaymentForm = document.querySelector(".paytm-payment-form");
+        const confirmationContainer = document.getElementById("confirmation-container");
+        const successContainer = document.getElementById("success-container");
+        "confirmation-container"
+    
+      cardPaymentButton.addEventListener("click", () => {
+        cardPaymentForm.style.display = "block";
+        paytmPaymentForm.style.display = "none";
+      });
+
+      paytmPaymentButton.addEventListener("click", () => {
+        cardPaymentForm.style.display = "none";
+        paytmPaymentForm.style.display = "block";
+      });
+
+      // Simulate payment processing and show the confirmation/success page
+      document
+        .getElementById("processCardPayment")
+        .addEventListener("click", () => {
+          cardPaymentForm.style.display = "none";
+          confirmationContainer.style.display = "block";
+        });
+
+      document
+        .getElementById("processPaytmPayment")
+        .addEventListener("click", () => {
+          paytmPaymentForm.style.display = "none";
+          confirmationContainer.style.display = "block";
+        });
+     
+      
+    </script>
+  </body>
+</html>
